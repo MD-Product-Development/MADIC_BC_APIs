@@ -574,6 +574,9 @@ paths:
                 - careLabels
                 - masterLongDescriptions
                 - productSalesPrices
+                - salesImportDocuments
+                - salesImportLines
+                - salesImportPayments
               type: string
         - name: $expand
           in: query
@@ -597,6 +600,9 @@ paths:
                 - careLabels
                 - masterLongDescriptions
                 - productSalesPrices
+                - salesImportDocuments
+                - salesImportLines
+                - salesImportPayments
               type: string
       responses:
         '200':
@@ -660,6 +666,9 @@ paths:
                 - careLabels
                 - masterLongDescriptions
                 - productSalesPrices
+                - salesImportDocuments
+                - salesImportLines
+                - salesImportPayments
               type: string
         - name: $expand
           in: query
@@ -683,6 +692,9 @@ paths:
                 - careLabels
                 - masterLongDescriptions
                 - productSalesPrices
+                - salesImportDocuments
+                - salesImportLines
+                - salesImportPayments
               type: string
       responses:
         '200':
@@ -2494,6 +2506,1043 @@ paths:
             type: string
             format: uuid
           x-ms-docs-key-type: productSalesPrice
+        - name: If-Match
+          in: header
+          description: ETag
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Success
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation
+  '/companies({id})/salesImportDocuments':
+    get:
+      tags:
+        - companies.salesImportDocument
+      summary: Get salesImportDocuments from companies
+      operationId: companies.ListSalesImportDocuments
+      parameters:
+        - name: id
+          in: path
+          description: 'key: id of company'
+          required: true
+          schema:
+            pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+            type: string
+            format: uuid
+          x-ms-docs-key-type: company
+        - $ref: '#/components/parameters/top'
+        - $ref: '#/components/parameters/skip'
+        - $ref: '#/components/parameters/search'
+        - $ref: '#/components/parameters/filter'
+        - $ref: '#/components/parameters/count'
+        - name: $orderby
+          in: query
+          description: Order items by property values
+          style: form
+          explode: false
+          schema:
+            uniqueItems: true
+            type: array
+            items:
+              enum:
+                - id
+                - id desc
+                - eventType
+                - eventType desc
+                - documentType
+                - documentType desc
+                - documentNumber
+                - documentNumber desc
+                - customerNumber
+                - customerNumber desc
+                - customerID
+                - customerID desc
+                - billingName
+                - billingName desc
+                - billingAddressLine1
+                - billingAddressLine1 desc
+                - billingAddressLine2
+                - billingAddressLine2 desc
+                - billingCity
+                - billingCity desc
+                - billingState
+                - billingState desc
+                - billingCountry
+                - billingCountry desc
+                - billingPostalCode
+                - billingPostalCode desc
+                - shippingName
+                - shippingName desc
+                - shippingAddressLine1
+                - shippingAddressLine1 desc
+                - shippingAddressLine2
+                - shippingAddressLine2 desc
+                - shippingCity
+                - shippingCity desc
+                - shippingState
+                - shippingState desc
+                - shippingCountry
+                - shippingCountry desc
+                - shippingPostalCode
+                - shippingPostalCode desc
+                - currencyCode
+                - currencyCode desc
+                - transactionDate
+                - transactionDate desc
+                - orderDate
+                - orderDate desc
+                - requestedDeliveryDate
+                - requestedDeliveryDate desc
+                - documentDate
+                - documentDate desc
+                - externalDocumentNo
+                - externalDocumentNo desc
+                - yourReference
+                - yourReference desc
+                - priceIncludesTax
+                - priceIncludesTax desc
+                - allowanceAmount
+                - allowanceAmount desc
+                - voucherReference
+                - voucherReference desc
+                - voucherDescription
+                - voucherDescription desc
+                - voucherAmount
+                - voucherAmount desc
+                - paymentMethod
+                - paymentMethod desc
+                - paymentReference
+                - paymentReference desc
+                - paymentAmount
+                - paymentAmount desc
+                - amountInclTax
+                - amountInclTax desc
+                - amountExclTax
+                - amountExclTax desc
+                - dimension1Code
+                - dimension1Code desc
+                - dimension2Code
+                - dimension2Code desc
+                - importCode
+                - importCode desc
+              type: string
+        - name: $select
+          in: query
+          description: Select properties to be returned
+          style: form
+          explode: false
+          schema:
+            uniqueItems: true
+            type: array
+            items:
+              enum:
+                - id
+                - eventType
+                - documentType
+                - documentNumber
+                - customerNumber
+                - customerID
+                - billingName
+                - billingAddressLine1
+                - billingAddressLine2
+                - billingCity
+                - billingState
+                - billingCountry
+                - billingPostalCode
+                - shippingName
+                - shippingAddressLine1
+                - shippingAddressLine2
+                - shippingCity
+                - shippingState
+                - shippingCountry
+                - shippingPostalCode
+                - currencyCode
+                - transactionDate
+                - orderDate
+                - requestedDeliveryDate
+                - documentDate
+                - externalDocumentNo
+                - yourReference
+                - priceIncludesTax
+                - allowanceAmount
+                - voucherReference
+                - voucherDescription
+                - voucherAmount
+                - paymentMethod
+                - paymentReference
+                - paymentAmount
+                - amountInclTax
+                - amountExclTax
+                - dimension1Code
+                - dimension2Code
+                - importCode
+                - salesImportLines
+                - salesImportPayments
+              type: string
+        - name: $expand
+          in: query
+          description: Expand related entities
+          style: form
+          explode: false
+          schema:
+            uniqueItems: true
+            type: array
+            items:
+              enum:
+                - '*'
+                - salesImportLines
+                - salesImportPayments
+              type: string
+      responses:
+        '200':
+          description: Retrieved navigation property
+          content:
+            application/json:
+              schema:
+                title: Collection of salesImportDocument
+                type: object
+                properties:
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Microsoft.NAV.salesImportDocument'
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation
+    post:
+      tags:
+        - companies.salesImportDocument
+      summary: Create new navigation property to salesImportDocuments for companies
+      operationId: companies.CreateSalesImportDocuments
+      parameters:
+        - name: id
+          in: path
+          description: 'key: id of company'
+          required: true
+          schema:
+            pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+            type: string
+            format: uuid
+          x-ms-docs-key-type: company
+      requestBody:
+        description: New navigation property
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Microsoft.NAV.salesImportDocument'
+        required: true
+      responses:
+        '201':
+          description: Created navigation property.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Microsoft.NAV.salesImportDocument'
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation
+  '/companies({id})/salesImportDocuments({id1})':
+    get:
+      tags:
+        - companies.salesImportDocument
+      summary: Get salesImportDocuments from companies
+      operationId: companies.GetSalesImportDocuments
+      parameters:
+        - name: id
+          in: path
+          description: 'key: id of company'
+          required: true
+          schema:
+            pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+            type: string
+            format: uuid
+          x-ms-docs-key-type: company
+        - name: id1
+          in: path
+          description: 'key: id of salesImportDocument'
+          required: true
+          schema:
+            pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+            type: string
+            format: uuid
+          x-ms-docs-key-type: salesImportDocument
+        - name: $select
+          in: query
+          description: Select properties to be returned
+          style: form
+          explode: false
+          schema:
+            uniqueItems: true
+            type: array
+            items:
+              enum:
+                - id
+                - eventType
+                - documentType
+                - documentNumber
+                - customerNumber
+                - customerID
+                - billingName
+                - billingAddressLine1
+                - billingAddressLine2
+                - billingCity
+                - billingState
+                - billingCountry
+                - billingPostalCode
+                - shippingName
+                - shippingAddressLine1
+                - shippingAddressLine2
+                - shippingCity
+                - shippingState
+                - shippingCountry
+                - shippingPostalCode
+                - currencyCode
+                - transactionDate
+                - orderDate
+                - requestedDeliveryDate
+                - documentDate
+                - externalDocumentNo
+                - yourReference
+                - priceIncludesTax
+                - allowanceAmount
+                - voucherReference
+                - voucherDescription
+                - voucherAmount
+                - paymentMethod
+                - paymentReference
+                - paymentAmount
+                - amountInclTax
+                - amountExclTax
+                - dimension1Code
+                - dimension2Code
+                - importCode
+                - salesImportLines
+                - salesImportPayments
+              type: string
+        - name: $expand
+          in: query
+          description: Expand related entities
+          style: form
+          explode: false
+          schema:
+            uniqueItems: true
+            type: array
+            items:
+              enum:
+                - '*'
+                - salesImportLines
+                - salesImportPayments
+              type: string
+      responses:
+        '200':
+          description: Retrieved navigation property
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Microsoft.NAV.salesImportDocument'
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation
+    patch:
+      tags:
+        - companies.salesImportDocument
+      summary: Update the navigation property salesImportDocuments in companies
+      operationId: companies.UpdateSalesImportDocuments
+      parameters:
+        - name: id
+          in: path
+          description: 'key: id of company'
+          required: true
+          schema:
+            pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+            type: string
+            format: uuid
+          x-ms-docs-key-type: company
+        - name: id1
+          in: path
+          description: 'key: id of salesImportDocument'
+          required: true
+          schema:
+            pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+            type: string
+            format: uuid
+          x-ms-docs-key-type: salesImportDocument
+      requestBody:
+        description: New navigation property values
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Microsoft.NAV.salesImportDocument'
+        required: true
+      responses:
+        '204':
+          description: Success
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation
+    delete:
+      tags:
+        - companies.salesImportDocument
+      summary: Delete navigation property salesImportDocuments for companies
+      operationId: companies.DeleteSalesImportDocuments
+      parameters:
+        - name: id
+          in: path
+          description: 'key: id of company'
+          required: true
+          schema:
+            pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+            type: string
+            format: uuid
+          x-ms-docs-key-type: company
+        - name: id1
+          in: path
+          description: 'key: id of salesImportDocument'
+          required: true
+          schema:
+            pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+            type: string
+            format: uuid
+          x-ms-docs-key-type: salesImportDocument
+        - name: If-Match
+          in: header
+          description: ETag
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Success
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation
+  '/companies({id})/salesImportLines':
+    get:
+      tags:
+        - companies.salesImportLine
+      summary: Get salesImportLines from companies
+      operationId: companies.ListSalesImportLines
+      parameters:
+        - name: id
+          in: path
+          description: 'key: id of company'
+          required: true
+          schema:
+            pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+            type: string
+            format: uuid
+          x-ms-docs-key-type: company
+        - $ref: '#/components/parameters/top'
+        - $ref: '#/components/parameters/skip'
+        - $ref: '#/components/parameters/search'
+        - $ref: '#/components/parameters/filter'
+        - $ref: '#/components/parameters/count'
+        - name: $orderby
+          in: query
+          description: Order items by property values
+          style: form
+          explode: false
+          schema:
+            uniqueItems: true
+            type: array
+            items:
+              enum:
+                - entryNo
+                - entryNo desc
+                - sequence
+                - sequence desc
+                - id
+                - id desc
+                - externalId
+                - externalId desc
+                - lineType
+                - lineType desc
+                - cancel
+                - cancel desc
+                - barcode
+                - barcode desc
+                - itemNumber
+                - itemNumber desc
+                - quantity
+                - quantity desc
+                - quantityShippedReturned
+                - quantityShippedReturned desc
+                - quantityInvoicedCredited
+                - quantityInvoicedCredited desc
+                - unitPrice
+                - unitPrice desc
+                - discountAmount
+                - discountAmount desc
+                - voucherReference
+                - voucherReference desc
+                - voucherDescription
+                - voucherDescription desc
+                - voucherAmount
+                - voucherAmount desc
+                - taxAmount
+                - taxAmount desc
+                - amountIncludingTax
+                - amountIncludingTax desc
+              type: string
+        - name: $select
+          in: query
+          description: Select properties to be returned
+          style: form
+          explode: false
+          schema:
+            uniqueItems: true
+            type: array
+            items:
+              enum:
+                - entryNo
+                - sequence
+                - id
+                - externalId
+                - lineType
+                - cancel
+                - barcode
+                - itemNumber
+                - quantity
+                - quantityShippedReturned
+                - quantityInvoicedCredited
+                - unitPrice
+                - discountAmount
+                - voucherReference
+                - voucherDescription
+                - voucherAmount
+                - taxAmount
+                - amountIncludingTax
+              type: string
+        - name: $expand
+          in: query
+          description: Expand related entities
+          style: form
+          explode: false
+          schema:
+            uniqueItems: true
+            type: array
+            items:
+              enum:
+                - '*'
+              type: string
+      responses:
+        '200':
+          description: Retrieved navigation property
+          content:
+            application/json:
+              schema:
+                title: Collection of salesImportLine
+                type: object
+                properties:
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Microsoft.NAV.salesImportLine'
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation
+    post:
+      tags:
+        - companies.salesImportLine
+      summary: Create new navigation property to salesImportLines for companies
+      operationId: companies.CreateSalesImportLines
+      parameters:
+        - name: id
+          in: path
+          description: 'key: id of company'
+          required: true
+          schema:
+            pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+            type: string
+            format: uuid
+          x-ms-docs-key-type: company
+      requestBody:
+        description: New navigation property
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Microsoft.NAV.salesImportLine'
+        required: true
+      responses:
+        '201':
+          description: Created navigation property.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Microsoft.NAV.salesImportLine'
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation
+  '/companies({id})/salesImportLines(entryNo={entryNo},sequence={sequence})':
+    get:
+      tags:
+        - companies.salesImportLine
+      summary: Get salesImportLines from companies
+      operationId: companies.GetSalesImportLines
+      parameters:
+        - name: id
+          in: path
+          description: 'key: id of company'
+          required: true
+          schema:
+            pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+            type: string
+            format: uuid
+          x-ms-docs-key-type: company
+        - name: entryNo
+          in: path
+          description: 'key: entryNo of salesImportLine'
+          required: true
+          schema:
+            maximum: 2147483647
+            minimum: -2147483648
+            type: integer
+            format: int32
+          x-ms-docs-key-type: salesImportLine
+        - name: sequence
+          in: path
+          description: 'key: sequence of salesImportLine'
+          required: true
+          schema:
+            maximum: 2147483647
+            minimum: -2147483648
+            type: integer
+            format: int32
+          x-ms-docs-key-type: salesImportLine
+        - name: $select
+          in: query
+          description: Select properties to be returned
+          style: form
+          explode: false
+          schema:
+            uniqueItems: true
+            type: array
+            items:
+              enum:
+                - entryNo
+                - sequence
+                - id
+                - externalId
+                - lineType
+                - cancel
+                - barcode
+                - itemNumber
+                - quantity
+                - quantityShippedReturned
+                - quantityInvoicedCredited
+                - unitPrice
+                - discountAmount
+                - voucherReference
+                - voucherDescription
+                - voucherAmount
+                - taxAmount
+                - amountIncludingTax
+              type: string
+        - name: $expand
+          in: query
+          description: Expand related entities
+          style: form
+          explode: false
+          schema:
+            uniqueItems: true
+            type: array
+            items:
+              enum:
+                - '*'
+              type: string
+      responses:
+        '200':
+          description: Retrieved navigation property
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Microsoft.NAV.salesImportLine'
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation
+    patch:
+      tags:
+        - companies.salesImportLine
+      summary: Update the navigation property salesImportLines in companies
+      operationId: companies.UpdateSalesImportLines
+      parameters:
+        - name: id
+          in: path
+          description: 'key: id of company'
+          required: true
+          schema:
+            pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+            type: string
+            format: uuid
+          x-ms-docs-key-type: company
+        - name: entryNo
+          in: path
+          description: 'key: entryNo of salesImportLine'
+          required: true
+          schema:
+            maximum: 2147483647
+            minimum: -2147483648
+            type: integer
+            format: int32
+          x-ms-docs-key-type: salesImportLine
+        - name: sequence
+          in: path
+          description: 'key: sequence of salesImportLine'
+          required: true
+          schema:
+            maximum: 2147483647
+            minimum: -2147483648
+            type: integer
+            format: int32
+          x-ms-docs-key-type: salesImportLine
+      requestBody:
+        description: New navigation property values
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Microsoft.NAV.salesImportLine'
+        required: true
+      responses:
+        '204':
+          description: Success
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation
+    delete:
+      tags:
+        - companies.salesImportLine
+      summary: Delete navigation property salesImportLines for companies
+      operationId: companies.DeleteSalesImportLines
+      parameters:
+        - name: id
+          in: path
+          description: 'key: id of company'
+          required: true
+          schema:
+            pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+            type: string
+            format: uuid
+          x-ms-docs-key-type: company
+        - name: entryNo
+          in: path
+          description: 'key: entryNo of salesImportLine'
+          required: true
+          schema:
+            maximum: 2147483647
+            minimum: -2147483648
+            type: integer
+            format: int32
+          x-ms-docs-key-type: salesImportLine
+        - name: sequence
+          in: path
+          description: 'key: sequence of salesImportLine'
+          required: true
+          schema:
+            maximum: 2147483647
+            minimum: -2147483648
+            type: integer
+            format: int32
+          x-ms-docs-key-type: salesImportLine
+        - name: If-Match
+          in: header
+          description: ETag
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Success
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation
+  '/companies({id})/salesImportPayments':
+    get:
+      tags:
+        - companies.salesImportPayment
+      summary: Get salesImportPayments from companies
+      operationId: companies.ListSalesImportPayments
+      parameters:
+        - name: id
+          in: path
+          description: 'key: id of company'
+          required: true
+          schema:
+            pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+            type: string
+            format: uuid
+          x-ms-docs-key-type: company
+        - $ref: '#/components/parameters/top'
+        - $ref: '#/components/parameters/skip'
+        - $ref: '#/components/parameters/search'
+        - $ref: '#/components/parameters/filter'
+        - $ref: '#/components/parameters/count'
+        - name: $orderby
+          in: query
+          description: Order items by property values
+          style: form
+          explode: false
+          schema:
+            uniqueItems: true
+            type: array
+            items:
+              enum:
+                - entryNo
+                - entryNo desc
+                - sequence
+                - sequence desc
+                - id
+                - id desc
+                - service
+                - service desc
+                - reference
+                - reference desc
+                - paymentAmount
+                - paymentAmount desc
+                - refundAmount
+                - refundAmount desc
+                - description
+                - description desc
+              type: string
+        - name: $select
+          in: query
+          description: Select properties to be returned
+          style: form
+          explode: false
+          schema:
+            uniqueItems: true
+            type: array
+            items:
+              enum:
+                - entryNo
+                - sequence
+                - id
+                - service
+                - reference
+                - paymentAmount
+                - refundAmount
+                - description
+              type: string
+        - name: $expand
+          in: query
+          description: Expand related entities
+          style: form
+          explode: false
+          schema:
+            uniqueItems: true
+            type: array
+            items:
+              enum:
+                - '*'
+              type: string
+      responses:
+        '200':
+          description: Retrieved navigation property
+          content:
+            application/json:
+              schema:
+                title: Collection of salesImportPayment
+                type: object
+                properties:
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Microsoft.NAV.salesImportPayment'
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation
+    post:
+      tags:
+        - companies.salesImportPayment
+      summary: Create new navigation property to salesImportPayments for companies
+      operationId: companies.CreateSalesImportPayments
+      parameters:
+        - name: id
+          in: path
+          description: 'key: id of company'
+          required: true
+          schema:
+            pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+            type: string
+            format: uuid
+          x-ms-docs-key-type: company
+      requestBody:
+        description: New navigation property
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Microsoft.NAV.salesImportPayment'
+        required: true
+      responses:
+        '201':
+          description: Created navigation property.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Microsoft.NAV.salesImportPayment'
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation
+  '/companies({id})/salesImportPayments(entryNo={entryNo},sequence={sequence})':
+    get:
+      tags:
+        - companies.salesImportPayment
+      summary: Get salesImportPayments from companies
+      operationId: companies.GetSalesImportPayments
+      parameters:
+        - name: id
+          in: path
+          description: 'key: id of company'
+          required: true
+          schema:
+            pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+            type: string
+            format: uuid
+          x-ms-docs-key-type: company
+        - name: entryNo
+          in: path
+          description: 'key: entryNo of salesImportPayment'
+          required: true
+          schema:
+            maximum: 2147483647
+            minimum: -2147483648
+            type: integer
+            format: int32
+          x-ms-docs-key-type: salesImportPayment
+        - name: sequence
+          in: path
+          description: 'key: sequence of salesImportPayment'
+          required: true
+          schema:
+            maximum: 2147483647
+            minimum: -2147483648
+            type: integer
+            format: int32
+          x-ms-docs-key-type: salesImportPayment
+        - name: $select
+          in: query
+          description: Select properties to be returned
+          style: form
+          explode: false
+          schema:
+            uniqueItems: true
+            type: array
+            items:
+              enum:
+                - entryNo
+                - sequence
+                - id
+                - service
+                - reference
+                - paymentAmount
+                - refundAmount
+                - description
+              type: string
+        - name: $expand
+          in: query
+          description: Expand related entities
+          style: form
+          explode: false
+          schema:
+            uniqueItems: true
+            type: array
+            items:
+              enum:
+                - '*'
+              type: string
+      responses:
+        '200':
+          description: Retrieved navigation property
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Microsoft.NAV.salesImportPayment'
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation
+    patch:
+      tags:
+        - companies.salesImportPayment
+      summary: Update the navigation property salesImportPayments in companies
+      operationId: companies.UpdateSalesImportPayments
+      parameters:
+        - name: id
+          in: path
+          description: 'key: id of company'
+          required: true
+          schema:
+            pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+            type: string
+            format: uuid
+          x-ms-docs-key-type: company
+        - name: entryNo
+          in: path
+          description: 'key: entryNo of salesImportPayment'
+          required: true
+          schema:
+            maximum: 2147483647
+            minimum: -2147483648
+            type: integer
+            format: int32
+          x-ms-docs-key-type: salesImportPayment
+        - name: sequence
+          in: path
+          description: 'key: sequence of salesImportPayment'
+          required: true
+          schema:
+            maximum: 2147483647
+            minimum: -2147483648
+            type: integer
+            format: int32
+          x-ms-docs-key-type: salesImportPayment
+      requestBody:
+        description: New navigation property values
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Microsoft.NAV.salesImportPayment'
+        required: true
+      responses:
+        '204':
+          description: Success
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation
+    delete:
+      tags:
+        - companies.salesImportPayment
+      summary: Delete navigation property salesImportPayments for companies
+      operationId: companies.DeleteSalesImportPayments
+      parameters:
+        - name: id
+          in: path
+          description: 'key: id of company'
+          required: true
+          schema:
+            pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+            type: string
+            format: uuid
+          x-ms-docs-key-type: company
+        - name: entryNo
+          in: path
+          description: 'key: entryNo of salesImportPayment'
+          required: true
+          schema:
+            maximum: 2147483647
+            minimum: -2147483648
+            type: integer
+            format: int32
+          x-ms-docs-key-type: salesImportPayment
+        - name: sequence
+          in: path
+          description: 'key: sequence of salesImportPayment'
+          required: true
+          schema:
+            maximum: 2147483647
+            minimum: -2147483648
+            type: integer
+            format: int32
+          x-ms-docs-key-type: salesImportPayment
         - name: If-Match
           in: header
           description: ETag
@@ -6528,6 +7577,1538 @@ paths:
         default:
           $ref: '#/components/responses/error'
       x-ms-docs-operation-type: operation
+  /salesImportDocuments:
+    get:
+      tags:
+        - salesImportDocuments.salesImportDocument
+      summary: Get entities from salesImportDocuments
+      operationId: salesImportDocuments.salesImportDocument.ListSalesImportDocument
+      parameters:
+        - $ref: '#/components/parameters/top'
+        - $ref: '#/components/parameters/skip'
+        - $ref: '#/components/parameters/search'
+        - $ref: '#/components/parameters/filter'
+        - $ref: '#/components/parameters/count'
+        - name: $orderby
+          in: query
+          description: Order items by property values
+          style: form
+          explode: false
+          schema:
+            uniqueItems: true
+            type: array
+            items:
+              enum:
+                - id
+                - id desc
+                - eventType
+                - eventType desc
+                - documentType
+                - documentType desc
+                - documentNumber
+                - documentNumber desc
+                - customerNumber
+                - customerNumber desc
+                - customerID
+                - customerID desc
+                - billingName
+                - billingName desc
+                - billingAddressLine1
+                - billingAddressLine1 desc
+                - billingAddressLine2
+                - billingAddressLine2 desc
+                - billingCity
+                - billingCity desc
+                - billingState
+                - billingState desc
+                - billingCountry
+                - billingCountry desc
+                - billingPostalCode
+                - billingPostalCode desc
+                - shippingName
+                - shippingName desc
+                - shippingAddressLine1
+                - shippingAddressLine1 desc
+                - shippingAddressLine2
+                - shippingAddressLine2 desc
+                - shippingCity
+                - shippingCity desc
+                - shippingState
+                - shippingState desc
+                - shippingCountry
+                - shippingCountry desc
+                - shippingPostalCode
+                - shippingPostalCode desc
+                - currencyCode
+                - currencyCode desc
+                - transactionDate
+                - transactionDate desc
+                - orderDate
+                - orderDate desc
+                - requestedDeliveryDate
+                - requestedDeliveryDate desc
+                - documentDate
+                - documentDate desc
+                - externalDocumentNo
+                - externalDocumentNo desc
+                - yourReference
+                - yourReference desc
+                - priceIncludesTax
+                - priceIncludesTax desc
+                - allowanceAmount
+                - allowanceAmount desc
+                - voucherReference
+                - voucherReference desc
+                - voucherDescription
+                - voucherDescription desc
+                - voucherAmount
+                - voucherAmount desc
+                - paymentMethod
+                - paymentMethod desc
+                - paymentReference
+                - paymentReference desc
+                - paymentAmount
+                - paymentAmount desc
+                - amountInclTax
+                - amountInclTax desc
+                - amountExclTax
+                - amountExclTax desc
+                - dimension1Code
+                - dimension1Code desc
+                - dimension2Code
+                - dimension2Code desc
+                - importCode
+                - importCode desc
+              type: string
+        - name: $select
+          in: query
+          description: Select properties to be returned
+          style: form
+          explode: false
+          schema:
+            uniqueItems: true
+            type: array
+            items:
+              enum:
+                - id
+                - eventType
+                - documentType
+                - documentNumber
+                - customerNumber
+                - customerID
+                - billingName
+                - billingAddressLine1
+                - billingAddressLine2
+                - billingCity
+                - billingState
+                - billingCountry
+                - billingPostalCode
+                - shippingName
+                - shippingAddressLine1
+                - shippingAddressLine2
+                - shippingCity
+                - shippingState
+                - shippingCountry
+                - shippingPostalCode
+                - currencyCode
+                - transactionDate
+                - orderDate
+                - requestedDeliveryDate
+                - documentDate
+                - externalDocumentNo
+                - yourReference
+                - priceIncludesTax
+                - allowanceAmount
+                - voucherReference
+                - voucherDescription
+                - voucherAmount
+                - paymentMethod
+                - paymentReference
+                - paymentAmount
+                - amountInclTax
+                - amountExclTax
+                - dimension1Code
+                - dimension2Code
+                - importCode
+                - salesImportLines
+                - salesImportPayments
+              type: string
+        - name: $expand
+          in: query
+          description: Expand related entities
+          style: form
+          explode: false
+          schema:
+            uniqueItems: true
+            type: array
+            items:
+              enum:
+                - '*'
+                - salesImportLines
+                - salesImportPayments
+              type: string
+      responses:
+        '200':
+          description: Retrieved entities
+          content:
+            application/json:
+              schema:
+                title: Collection of salesImportDocument
+                type: object
+                properties:
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Microsoft.NAV.salesImportDocument'
+        default:
+          $ref: '#/components/responses/error'
+    post:
+      tags:
+        - salesImportDocuments.salesImportDocument
+      summary: Add new entity to salesImportDocuments
+      operationId: salesImportDocuments.salesImportDocument.CreateSalesImportDocument
+      requestBody:
+        description: New entity
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Microsoft.NAV.salesImportDocument'
+        required: true
+      responses:
+        '201':
+          description: Created entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Microsoft.NAV.salesImportDocument'
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation
+  '/salesImportDocuments({id})':
+    get:
+      tags:
+        - salesImportDocuments.salesImportDocument
+      summary: Get entity from salesImportDocuments by key
+      operationId: salesImportDocuments.salesImportDocument.GetSalesImportDocument
+      parameters:
+        - name: id
+          in: path
+          description: 'key: id of salesImportDocument'
+          required: true
+          schema:
+            pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+            type: string
+            format: uuid
+          x-ms-docs-key-type: salesImportDocument
+        - name: $select
+          in: query
+          description: Select properties to be returned
+          style: form
+          explode: false
+          schema:
+            uniqueItems: true
+            type: array
+            items:
+              enum:
+                - id
+                - eventType
+                - documentType
+                - documentNumber
+                - customerNumber
+                - customerID
+                - billingName
+                - billingAddressLine1
+                - billingAddressLine2
+                - billingCity
+                - billingState
+                - billingCountry
+                - billingPostalCode
+                - shippingName
+                - shippingAddressLine1
+                - shippingAddressLine2
+                - shippingCity
+                - shippingState
+                - shippingCountry
+                - shippingPostalCode
+                - currencyCode
+                - transactionDate
+                - orderDate
+                - requestedDeliveryDate
+                - documentDate
+                - externalDocumentNo
+                - yourReference
+                - priceIncludesTax
+                - allowanceAmount
+                - voucherReference
+                - voucherDescription
+                - voucherAmount
+                - paymentMethod
+                - paymentReference
+                - paymentAmount
+                - amountInclTax
+                - amountExclTax
+                - dimension1Code
+                - dimension2Code
+                - importCode
+                - salesImportLines
+                - salesImportPayments
+              type: string
+        - name: $expand
+          in: query
+          description: Expand related entities
+          style: form
+          explode: false
+          schema:
+            uniqueItems: true
+            type: array
+            items:
+              enum:
+                - '*'
+                - salesImportLines
+                - salesImportPayments
+              type: string
+      responses:
+        '200':
+          description: Retrieved entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Microsoft.NAV.salesImportDocument'
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation
+    patch:
+      tags:
+        - salesImportDocuments.salesImportDocument
+      summary: Update entity in salesImportDocuments
+      operationId: salesImportDocuments.salesImportDocument.UpdateSalesImportDocument
+      parameters:
+        - name: id
+          in: path
+          description: 'key: id of salesImportDocument'
+          required: true
+          schema:
+            pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+            type: string
+            format: uuid
+          x-ms-docs-key-type: salesImportDocument
+      requestBody:
+        description: New property values
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Microsoft.NAV.salesImportDocument'
+        required: true
+      responses:
+        '204':
+          description: Success
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation
+    delete:
+      tags:
+        - salesImportDocuments.salesImportDocument
+      summary: Delete entity from salesImportDocuments
+      operationId: salesImportDocuments.salesImportDocument.DeleteSalesImportDocument
+      parameters:
+        - name: id
+          in: path
+          description: 'key: id of salesImportDocument'
+          required: true
+          schema:
+            pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+            type: string
+            format: uuid
+          x-ms-docs-key-type: salesImportDocument
+        - name: If-Match
+          in: header
+          description: ETag
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Success
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation
+  '/salesImportDocuments({id})/salesImportLines':
+    get:
+      tags:
+        - salesImportDocuments.salesImportLine
+      summary: Get salesImportLines from salesImportDocuments
+      operationId: salesImportDocuments.ListSalesImportLines
+      parameters:
+        - name: id
+          in: path
+          description: 'key: id of salesImportDocument'
+          required: true
+          schema:
+            pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+            type: string
+            format: uuid
+          x-ms-docs-key-type: salesImportDocument
+        - $ref: '#/components/parameters/top'
+        - $ref: '#/components/parameters/skip'
+        - $ref: '#/components/parameters/search'
+        - $ref: '#/components/parameters/filter'
+        - $ref: '#/components/parameters/count'
+        - name: $orderby
+          in: query
+          description: Order items by property values
+          style: form
+          explode: false
+          schema:
+            uniqueItems: true
+            type: array
+            items:
+              enum:
+                - entryNo
+                - entryNo desc
+                - sequence
+                - sequence desc
+                - id
+                - id desc
+                - externalId
+                - externalId desc
+                - lineType
+                - lineType desc
+                - cancel
+                - cancel desc
+                - barcode
+                - barcode desc
+                - itemNumber
+                - itemNumber desc
+                - quantity
+                - quantity desc
+                - quantityShippedReturned
+                - quantityShippedReturned desc
+                - quantityInvoicedCredited
+                - quantityInvoicedCredited desc
+                - unitPrice
+                - unitPrice desc
+                - discountAmount
+                - discountAmount desc
+                - voucherReference
+                - voucherReference desc
+                - voucherDescription
+                - voucherDescription desc
+                - voucherAmount
+                - voucherAmount desc
+                - taxAmount
+                - taxAmount desc
+                - amountIncludingTax
+                - amountIncludingTax desc
+              type: string
+        - name: $select
+          in: query
+          description: Select properties to be returned
+          style: form
+          explode: false
+          schema:
+            uniqueItems: true
+            type: array
+            items:
+              enum:
+                - entryNo
+                - sequence
+                - id
+                - externalId
+                - lineType
+                - cancel
+                - barcode
+                - itemNumber
+                - quantity
+                - quantityShippedReturned
+                - quantityInvoicedCredited
+                - unitPrice
+                - discountAmount
+                - voucherReference
+                - voucherDescription
+                - voucherAmount
+                - taxAmount
+                - amountIncludingTax
+              type: string
+        - name: $expand
+          in: query
+          description: Expand related entities
+          style: form
+          explode: false
+          schema:
+            uniqueItems: true
+            type: array
+            items:
+              enum:
+                - '*'
+              type: string
+      responses:
+        '200':
+          description: Retrieved navigation property
+          content:
+            application/json:
+              schema:
+                title: Collection of salesImportLine
+                type: object
+                properties:
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Microsoft.NAV.salesImportLine'
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation
+    post:
+      tags:
+        - salesImportDocuments.salesImportLine
+      summary: Create new navigation property to salesImportLines for salesImportDocuments
+      operationId: salesImportDocuments.CreateSalesImportLines
+      parameters:
+        - name: id
+          in: path
+          description: 'key: id of salesImportDocument'
+          required: true
+          schema:
+            pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+            type: string
+            format: uuid
+          x-ms-docs-key-type: salesImportDocument
+      requestBody:
+        description: New navigation property
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Microsoft.NAV.salesImportLine'
+        required: true
+      responses:
+        '201':
+          description: Created navigation property.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Microsoft.NAV.salesImportLine'
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation
+  '/salesImportDocuments({id})/salesImportLines(entryNo={entryNo},sequence={sequence})':
+    get:
+      tags:
+        - salesImportDocuments.salesImportLine
+      summary: Get salesImportLines from salesImportDocuments
+      operationId: salesImportDocuments.GetSalesImportLines
+      parameters:
+        - name: id
+          in: path
+          description: 'key: id of salesImportDocument'
+          required: true
+          schema:
+            pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+            type: string
+            format: uuid
+          x-ms-docs-key-type: salesImportDocument
+        - name: entryNo
+          in: path
+          description: 'key: entryNo of salesImportLine'
+          required: true
+          schema:
+            maximum: 2147483647
+            minimum: -2147483648
+            type: integer
+            format: int32
+          x-ms-docs-key-type: salesImportLine
+        - name: sequence
+          in: path
+          description: 'key: sequence of salesImportLine'
+          required: true
+          schema:
+            maximum: 2147483647
+            minimum: -2147483648
+            type: integer
+            format: int32
+          x-ms-docs-key-type: salesImportLine
+        - name: $select
+          in: query
+          description: Select properties to be returned
+          style: form
+          explode: false
+          schema:
+            uniqueItems: true
+            type: array
+            items:
+              enum:
+                - entryNo
+                - sequence
+                - id
+                - externalId
+                - lineType
+                - cancel
+                - barcode
+                - itemNumber
+                - quantity
+                - quantityShippedReturned
+                - quantityInvoicedCredited
+                - unitPrice
+                - discountAmount
+                - voucherReference
+                - voucherDescription
+                - voucherAmount
+                - taxAmount
+                - amountIncludingTax
+              type: string
+        - name: $expand
+          in: query
+          description: Expand related entities
+          style: form
+          explode: false
+          schema:
+            uniqueItems: true
+            type: array
+            items:
+              enum:
+                - '*'
+              type: string
+      responses:
+        '200':
+          description: Retrieved navigation property
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Microsoft.NAV.salesImportLine'
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation
+    patch:
+      tags:
+        - salesImportDocuments.salesImportLine
+      summary: Update the navigation property salesImportLines in salesImportDocuments
+      operationId: salesImportDocuments.UpdateSalesImportLines
+      parameters:
+        - name: id
+          in: path
+          description: 'key: id of salesImportDocument'
+          required: true
+          schema:
+            pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+            type: string
+            format: uuid
+          x-ms-docs-key-type: salesImportDocument
+        - name: entryNo
+          in: path
+          description: 'key: entryNo of salesImportLine'
+          required: true
+          schema:
+            maximum: 2147483647
+            minimum: -2147483648
+            type: integer
+            format: int32
+          x-ms-docs-key-type: salesImportLine
+        - name: sequence
+          in: path
+          description: 'key: sequence of salesImportLine'
+          required: true
+          schema:
+            maximum: 2147483647
+            minimum: -2147483648
+            type: integer
+            format: int32
+          x-ms-docs-key-type: salesImportLine
+      requestBody:
+        description: New navigation property values
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Microsoft.NAV.salesImportLine'
+        required: true
+      responses:
+        '204':
+          description: Success
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation
+    delete:
+      tags:
+        - salesImportDocuments.salesImportLine
+      summary: Delete navigation property salesImportLines for salesImportDocuments
+      operationId: salesImportDocuments.DeleteSalesImportLines
+      parameters:
+        - name: id
+          in: path
+          description: 'key: id of salesImportDocument'
+          required: true
+          schema:
+            pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+            type: string
+            format: uuid
+          x-ms-docs-key-type: salesImportDocument
+        - name: entryNo
+          in: path
+          description: 'key: entryNo of salesImportLine'
+          required: true
+          schema:
+            maximum: 2147483647
+            minimum: -2147483648
+            type: integer
+            format: int32
+          x-ms-docs-key-type: salesImportLine
+        - name: sequence
+          in: path
+          description: 'key: sequence of salesImportLine'
+          required: true
+          schema:
+            maximum: 2147483647
+            minimum: -2147483648
+            type: integer
+            format: int32
+          x-ms-docs-key-type: salesImportLine
+        - name: If-Match
+          in: header
+          description: ETag
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Success
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation
+  '/salesImportDocuments({id})/salesImportPayments':
+    get:
+      tags:
+        - salesImportDocuments.salesImportPayment
+      summary: Get salesImportPayments from salesImportDocuments
+      operationId: salesImportDocuments.ListSalesImportPayments
+      parameters:
+        - name: id
+          in: path
+          description: 'key: id of salesImportDocument'
+          required: true
+          schema:
+            pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+            type: string
+            format: uuid
+          x-ms-docs-key-type: salesImportDocument
+        - $ref: '#/components/parameters/top'
+        - $ref: '#/components/parameters/skip'
+        - $ref: '#/components/parameters/search'
+        - $ref: '#/components/parameters/filter'
+        - $ref: '#/components/parameters/count'
+        - name: $orderby
+          in: query
+          description: Order items by property values
+          style: form
+          explode: false
+          schema:
+            uniqueItems: true
+            type: array
+            items:
+              enum:
+                - entryNo
+                - entryNo desc
+                - sequence
+                - sequence desc
+                - id
+                - id desc
+                - service
+                - service desc
+                - reference
+                - reference desc
+                - paymentAmount
+                - paymentAmount desc
+                - refundAmount
+                - refundAmount desc
+                - description
+                - description desc
+              type: string
+        - name: $select
+          in: query
+          description: Select properties to be returned
+          style: form
+          explode: false
+          schema:
+            uniqueItems: true
+            type: array
+            items:
+              enum:
+                - entryNo
+                - sequence
+                - id
+                - service
+                - reference
+                - paymentAmount
+                - refundAmount
+                - description
+              type: string
+        - name: $expand
+          in: query
+          description: Expand related entities
+          style: form
+          explode: false
+          schema:
+            uniqueItems: true
+            type: array
+            items:
+              enum:
+                - '*'
+              type: string
+      responses:
+        '200':
+          description: Retrieved navigation property
+          content:
+            application/json:
+              schema:
+                title: Collection of salesImportPayment
+                type: object
+                properties:
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Microsoft.NAV.salesImportPayment'
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation
+    post:
+      tags:
+        - salesImportDocuments.salesImportPayment
+      summary: Create new navigation property to salesImportPayments for salesImportDocuments
+      operationId: salesImportDocuments.CreateSalesImportPayments
+      parameters:
+        - name: id
+          in: path
+          description: 'key: id of salesImportDocument'
+          required: true
+          schema:
+            pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+            type: string
+            format: uuid
+          x-ms-docs-key-type: salesImportDocument
+      requestBody:
+        description: New navigation property
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Microsoft.NAV.salesImportPayment'
+        required: true
+      responses:
+        '201':
+          description: Created navigation property.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Microsoft.NAV.salesImportPayment'
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation
+  '/salesImportDocuments({id})/salesImportPayments(entryNo={entryNo},sequence={sequence})':
+    get:
+      tags:
+        - salesImportDocuments.salesImportPayment
+      summary: Get salesImportPayments from salesImportDocuments
+      operationId: salesImportDocuments.GetSalesImportPayments
+      parameters:
+        - name: id
+          in: path
+          description: 'key: id of salesImportDocument'
+          required: true
+          schema:
+            pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+            type: string
+            format: uuid
+          x-ms-docs-key-type: salesImportDocument
+        - name: entryNo
+          in: path
+          description: 'key: entryNo of salesImportPayment'
+          required: true
+          schema:
+            maximum: 2147483647
+            minimum: -2147483648
+            type: integer
+            format: int32
+          x-ms-docs-key-type: salesImportPayment
+        - name: sequence
+          in: path
+          description: 'key: sequence of salesImportPayment'
+          required: true
+          schema:
+            maximum: 2147483647
+            minimum: -2147483648
+            type: integer
+            format: int32
+          x-ms-docs-key-type: salesImportPayment
+        - name: $select
+          in: query
+          description: Select properties to be returned
+          style: form
+          explode: false
+          schema:
+            uniqueItems: true
+            type: array
+            items:
+              enum:
+                - entryNo
+                - sequence
+                - id
+                - service
+                - reference
+                - paymentAmount
+                - refundAmount
+                - description
+              type: string
+        - name: $expand
+          in: query
+          description: Expand related entities
+          style: form
+          explode: false
+          schema:
+            uniqueItems: true
+            type: array
+            items:
+              enum:
+                - '*'
+              type: string
+      responses:
+        '200':
+          description: Retrieved navigation property
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Microsoft.NAV.salesImportPayment'
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation
+    patch:
+      tags:
+        - salesImportDocuments.salesImportPayment
+      summary: Update the navigation property salesImportPayments in salesImportDocuments
+      operationId: salesImportDocuments.UpdateSalesImportPayments
+      parameters:
+        - name: id
+          in: path
+          description: 'key: id of salesImportDocument'
+          required: true
+          schema:
+            pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+            type: string
+            format: uuid
+          x-ms-docs-key-type: salesImportDocument
+        - name: entryNo
+          in: path
+          description: 'key: entryNo of salesImportPayment'
+          required: true
+          schema:
+            maximum: 2147483647
+            minimum: -2147483648
+            type: integer
+            format: int32
+          x-ms-docs-key-type: salesImportPayment
+        - name: sequence
+          in: path
+          description: 'key: sequence of salesImportPayment'
+          required: true
+          schema:
+            maximum: 2147483647
+            minimum: -2147483648
+            type: integer
+            format: int32
+          x-ms-docs-key-type: salesImportPayment
+      requestBody:
+        description: New navigation property values
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Microsoft.NAV.salesImportPayment'
+        required: true
+      responses:
+        '204':
+          description: Success
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation
+    delete:
+      tags:
+        - salesImportDocuments.salesImportPayment
+      summary: Delete navigation property salesImportPayments for salesImportDocuments
+      operationId: salesImportDocuments.DeleteSalesImportPayments
+      parameters:
+        - name: id
+          in: path
+          description: 'key: id of salesImportDocument'
+          required: true
+          schema:
+            pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+            type: string
+            format: uuid
+          x-ms-docs-key-type: salesImportDocument
+        - name: entryNo
+          in: path
+          description: 'key: entryNo of salesImportPayment'
+          required: true
+          schema:
+            maximum: 2147483647
+            minimum: -2147483648
+            type: integer
+            format: int32
+          x-ms-docs-key-type: salesImportPayment
+        - name: sequence
+          in: path
+          description: 'key: sequence of salesImportPayment'
+          required: true
+          schema:
+            maximum: 2147483647
+            minimum: -2147483648
+            type: integer
+            format: int32
+          x-ms-docs-key-type: salesImportPayment
+        - name: If-Match
+          in: header
+          description: ETag
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Success
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation
+  /salesImportLines:
+    get:
+      tags:
+        - salesImportLines.salesImportLine
+      summary: Get entities from salesImportLines
+      operationId: salesImportLines.salesImportLine.ListSalesImportLine
+      parameters:
+        - $ref: '#/components/parameters/top'
+        - $ref: '#/components/parameters/skip'
+        - $ref: '#/components/parameters/search'
+        - $ref: '#/components/parameters/filter'
+        - $ref: '#/components/parameters/count'
+        - name: $orderby
+          in: query
+          description: Order items by property values
+          style: form
+          explode: false
+          schema:
+            uniqueItems: true
+            type: array
+            items:
+              enum:
+                - entryNo
+                - entryNo desc
+                - sequence
+                - sequence desc
+                - id
+                - id desc
+                - externalId
+                - externalId desc
+                - lineType
+                - lineType desc
+                - cancel
+                - cancel desc
+                - barcode
+                - barcode desc
+                - itemNumber
+                - itemNumber desc
+                - quantity
+                - quantity desc
+                - quantityShippedReturned
+                - quantityShippedReturned desc
+                - quantityInvoicedCredited
+                - quantityInvoicedCredited desc
+                - unitPrice
+                - unitPrice desc
+                - discountAmount
+                - discountAmount desc
+                - voucherReference
+                - voucherReference desc
+                - voucherDescription
+                - voucherDescription desc
+                - voucherAmount
+                - voucherAmount desc
+                - taxAmount
+                - taxAmount desc
+                - amountIncludingTax
+                - amountIncludingTax desc
+              type: string
+        - name: $select
+          in: query
+          description: Select properties to be returned
+          style: form
+          explode: false
+          schema:
+            uniqueItems: true
+            type: array
+            items:
+              enum:
+                - entryNo
+                - sequence
+                - id
+                - externalId
+                - lineType
+                - cancel
+                - barcode
+                - itemNumber
+                - quantity
+                - quantityShippedReturned
+                - quantityInvoicedCredited
+                - unitPrice
+                - discountAmount
+                - voucherReference
+                - voucherDescription
+                - voucherAmount
+                - taxAmount
+                - amountIncludingTax
+              type: string
+        - name: $expand
+          in: query
+          description: Expand related entities
+          style: form
+          explode: false
+          schema:
+            uniqueItems: true
+            type: array
+            items:
+              enum:
+                - '*'
+              type: string
+      responses:
+        '200':
+          description: Retrieved entities
+          content:
+            application/json:
+              schema:
+                title: Collection of salesImportLine
+                type: object
+                properties:
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Microsoft.NAV.salesImportLine'
+        default:
+          $ref: '#/components/responses/error'
+    post:
+      tags:
+        - salesImportLines.salesImportLine
+      summary: Add new entity to salesImportLines
+      operationId: salesImportLines.salesImportLine.CreateSalesImportLine
+      requestBody:
+        description: New entity
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Microsoft.NAV.salesImportLine'
+        required: true
+      responses:
+        '201':
+          description: Created entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Microsoft.NAV.salesImportLine'
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation
+  '/salesImportLines(entryNo={entryNo},sequence={sequence})':
+    get:
+      tags:
+        - salesImportLines.salesImportLine
+      summary: Get entity from salesImportLines by key
+      operationId: salesImportLines.salesImportLine.GetSalesImportLine
+      parameters:
+        - name: entryNo
+          in: path
+          description: 'key: entryNo of salesImportLine'
+          required: true
+          schema:
+            maximum: 2147483647
+            minimum: -2147483648
+            type: integer
+            format: int32
+          x-ms-docs-key-type: salesImportLine
+        - name: sequence
+          in: path
+          description: 'key: sequence of salesImportLine'
+          required: true
+          schema:
+            maximum: 2147483647
+            minimum: -2147483648
+            type: integer
+            format: int32
+          x-ms-docs-key-type: salesImportLine
+        - name: $select
+          in: query
+          description: Select properties to be returned
+          style: form
+          explode: false
+          schema:
+            uniqueItems: true
+            type: array
+            items:
+              enum:
+                - entryNo
+                - sequence
+                - id
+                - externalId
+                - lineType
+                - cancel
+                - barcode
+                - itemNumber
+                - quantity
+                - quantityShippedReturned
+                - quantityInvoicedCredited
+                - unitPrice
+                - discountAmount
+                - voucherReference
+                - voucherDescription
+                - voucherAmount
+                - taxAmount
+                - amountIncludingTax
+              type: string
+        - name: $expand
+          in: query
+          description: Expand related entities
+          style: form
+          explode: false
+          schema:
+            uniqueItems: true
+            type: array
+            items:
+              enum:
+                - '*'
+              type: string
+      responses:
+        '200':
+          description: Retrieved entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Microsoft.NAV.salesImportLine'
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation
+    patch:
+      tags:
+        - salesImportLines.salesImportLine
+      summary: Update entity in salesImportLines
+      operationId: salesImportLines.salesImportLine.UpdateSalesImportLine
+      parameters:
+        - name: entryNo
+          in: path
+          description: 'key: entryNo of salesImportLine'
+          required: true
+          schema:
+            maximum: 2147483647
+            minimum: -2147483648
+            type: integer
+            format: int32
+          x-ms-docs-key-type: salesImportLine
+        - name: sequence
+          in: path
+          description: 'key: sequence of salesImportLine'
+          required: true
+          schema:
+            maximum: 2147483647
+            minimum: -2147483648
+            type: integer
+            format: int32
+          x-ms-docs-key-type: salesImportLine
+      requestBody:
+        description: New property values
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Microsoft.NAV.salesImportLine'
+        required: true
+      responses:
+        '204':
+          description: Success
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation
+    delete:
+      tags:
+        - salesImportLines.salesImportLine
+      summary: Delete entity from salesImportLines
+      operationId: salesImportLines.salesImportLine.DeleteSalesImportLine
+      parameters:
+        - name: entryNo
+          in: path
+          description: 'key: entryNo of salesImportLine'
+          required: true
+          schema:
+            maximum: 2147483647
+            minimum: -2147483648
+            type: integer
+            format: int32
+          x-ms-docs-key-type: salesImportLine
+        - name: sequence
+          in: path
+          description: 'key: sequence of salesImportLine'
+          required: true
+          schema:
+            maximum: 2147483647
+            minimum: -2147483648
+            type: integer
+            format: int32
+          x-ms-docs-key-type: salesImportLine
+        - name: If-Match
+          in: header
+          description: ETag
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Success
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation
+  /salesImportPayments:
+    get:
+      tags:
+        - salesImportPayments.salesImportPayment
+      summary: Get entities from salesImportPayments
+      operationId: salesImportPayments.salesImportPayment.ListSalesImportPayment
+      parameters:
+        - $ref: '#/components/parameters/top'
+        - $ref: '#/components/parameters/skip'
+        - $ref: '#/components/parameters/search'
+        - $ref: '#/components/parameters/filter'
+        - $ref: '#/components/parameters/count'
+        - name: $orderby
+          in: query
+          description: Order items by property values
+          style: form
+          explode: false
+          schema:
+            uniqueItems: true
+            type: array
+            items:
+              enum:
+                - entryNo
+                - entryNo desc
+                - sequence
+                - sequence desc
+                - id
+                - id desc
+                - service
+                - service desc
+                - reference
+                - reference desc
+                - paymentAmount
+                - paymentAmount desc
+                - refundAmount
+                - refundAmount desc
+                - description
+                - description desc
+              type: string
+        - name: $select
+          in: query
+          description: Select properties to be returned
+          style: form
+          explode: false
+          schema:
+            uniqueItems: true
+            type: array
+            items:
+              enum:
+                - entryNo
+                - sequence
+                - id
+                - service
+                - reference
+                - paymentAmount
+                - refundAmount
+                - description
+              type: string
+        - name: $expand
+          in: query
+          description: Expand related entities
+          style: form
+          explode: false
+          schema:
+            uniqueItems: true
+            type: array
+            items:
+              enum:
+                - '*'
+              type: string
+      responses:
+        '200':
+          description: Retrieved entities
+          content:
+            application/json:
+              schema:
+                title: Collection of salesImportPayment
+                type: object
+                properties:
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Microsoft.NAV.salesImportPayment'
+        default:
+          $ref: '#/components/responses/error'
+    post:
+      tags:
+        - salesImportPayments.salesImportPayment
+      summary: Add new entity to salesImportPayments
+      operationId: salesImportPayments.salesImportPayment.CreateSalesImportPayment
+      requestBody:
+        description: New entity
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Microsoft.NAV.salesImportPayment'
+        required: true
+      responses:
+        '201':
+          description: Created entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Microsoft.NAV.salesImportPayment'
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation
+  '/salesImportPayments(entryNo={entryNo},sequence={sequence})':
+    get:
+      tags:
+        - salesImportPayments.salesImportPayment
+      summary: Get entity from salesImportPayments by key
+      operationId: salesImportPayments.salesImportPayment.GetSalesImportPayment
+      parameters:
+        - name: entryNo
+          in: path
+          description: 'key: entryNo of salesImportPayment'
+          required: true
+          schema:
+            maximum: 2147483647
+            minimum: -2147483648
+            type: integer
+            format: int32
+          x-ms-docs-key-type: salesImportPayment
+        - name: sequence
+          in: path
+          description: 'key: sequence of salesImportPayment'
+          required: true
+          schema:
+            maximum: 2147483647
+            minimum: -2147483648
+            type: integer
+            format: int32
+          x-ms-docs-key-type: salesImportPayment
+        - name: $select
+          in: query
+          description: Select properties to be returned
+          style: form
+          explode: false
+          schema:
+            uniqueItems: true
+            type: array
+            items:
+              enum:
+                - entryNo
+                - sequence
+                - id
+                - service
+                - reference
+                - paymentAmount
+                - refundAmount
+                - description
+              type: string
+        - name: $expand
+          in: query
+          description: Expand related entities
+          style: form
+          explode: false
+          schema:
+            uniqueItems: true
+            type: array
+            items:
+              enum:
+                - '*'
+              type: string
+      responses:
+        '200':
+          description: Retrieved entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Microsoft.NAV.salesImportPayment'
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation
+    patch:
+      tags:
+        - salesImportPayments.salesImportPayment
+      summary: Update entity in salesImportPayments
+      operationId: salesImportPayments.salesImportPayment.UpdateSalesImportPayment
+      parameters:
+        - name: entryNo
+          in: path
+          description: 'key: entryNo of salesImportPayment'
+          required: true
+          schema:
+            maximum: 2147483647
+            minimum: -2147483648
+            type: integer
+            format: int32
+          x-ms-docs-key-type: salesImportPayment
+        - name: sequence
+          in: path
+          description: 'key: sequence of salesImportPayment'
+          required: true
+          schema:
+            maximum: 2147483647
+            minimum: -2147483648
+            type: integer
+            format: int32
+          x-ms-docs-key-type: salesImportPayment
+      requestBody:
+        description: New property values
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Microsoft.NAV.salesImportPayment'
+        required: true
+      responses:
+        '204':
+          description: Success
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation
+    delete:
+      tags:
+        - salesImportPayments.salesImportPayment
+      summary: Delete entity from salesImportPayments
+      operationId: salesImportPayments.salesImportPayment.DeleteSalesImportPayment
+      parameters:
+        - name: entryNo
+          in: path
+          description: 'key: entryNo of salesImportPayment'
+          required: true
+          schema:
+            maximum: 2147483647
+            minimum: -2147483648
+            type: integer
+            format: int32
+          x-ms-docs-key-type: salesImportPayment
+        - name: sequence
+          in: path
+          description: 'key: sequence of salesImportPayment'
+          required: true
+          schema:
+            maximum: 2147483647
+            minimum: -2147483648
+            type: integer
+            format: int32
+          x-ms-docs-key-type: salesImportPayment
+        - name: If-Match
+          in: header
+          description: ETag
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Success
+        default:
+          $ref: '#/components/responses/error'
+      x-ms-docs-operation-type: operation
   /subscriptions:
     get:
       tags:
@@ -7966,6 +10547,18 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Microsoft.NAV.productSalesPrice'
+        salesImportDocuments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Microsoft.NAV.salesImportDocument'
+        salesImportLines:
+          type: array
+          items:
+            $ref: '#/components/schemas/Microsoft.NAV.salesImportLine'
+        salesImportPayments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Microsoft.NAV.salesImportPayment'
       example:
         id: string (identifier)
         systemVersion: string
@@ -7999,6 +10592,12 @@ components:
           - '@odata.type': Microsoft.NAV.masterLongDescription
         productSalesPrices:
           - '@odata.type': Microsoft.NAV.productSalesPrice
+        salesImportDocuments:
+          - '@odata.type': Microsoft.NAV.salesImportDocument
+        salesImportLines:
+          - '@odata.type': Microsoft.NAV.salesImportLine
+        salesImportPayments:
+          - '@odata.type': Microsoft.NAV.salesImportPayment
     Microsoft.NAV.subscriptions:
       title: subscriptions
       type: object
@@ -8605,6 +11204,402 @@ components:
         minimumQuantity: number
         priceIncludesTax: true
         lastModifiedDateTime: string (timestamp)
+    Microsoft.NAV.salesImportDocument:
+      title: salesImportDocument
+      type: object
+      properties:
+        id:
+          pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+          type: string
+          format: uuid
+        eventType:
+          anyOf:
+            - $ref: '#/components/schemas/Microsoft.NAV.odgifSalesDocumentEventType'
+          nullable: true
+        documentType:
+          anyOf:
+            - $ref: '#/components/schemas/Microsoft.NAV.salesDocumentType'
+          nullable: true
+        documentNumber:
+          maxLength: 20
+          type: string
+          nullable: true
+        customerNumber:
+          maxLength: 20
+          type: string
+          nullable: true
+        customerID:
+          pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+          type: string
+          format: uuid
+          nullable: true
+        billingName:
+          maxLength: 100
+          type: string
+          nullable: true
+        billingAddressLine1:
+          maxLength: 50
+          type: string
+          nullable: true
+        billingAddressLine2:
+          maxLength: 50
+          type: string
+          nullable: true
+        billingCity:
+          maxLength: 30
+          type: string
+          nullable: true
+        billingState:
+          maxLength: 30
+          type: string
+          nullable: true
+        billingCountry:
+          maxLength: 10
+          type: string
+          nullable: true
+        billingPostalCode:
+          maxLength: 20
+          type: string
+          nullable: true
+        shippingName:
+          maxLength: 100
+          type: string
+          nullable: true
+        shippingAddressLine1:
+          maxLength: 50
+          type: string
+          nullable: true
+        shippingAddressLine2:
+          maxLength: 50
+          type: string
+          nullable: true
+        shippingCity:
+          maxLength: 30
+          type: string
+          nullable: true
+        shippingState:
+          maxLength: 30
+          type: string
+          nullable: true
+        shippingCountry:
+          maxLength: 10
+          type: string
+          nullable: true
+        shippingPostalCode:
+          maxLength: 20
+          type: string
+          nullable: true
+        currencyCode:
+          maxLength: 10
+          type: string
+          nullable: true
+        transactionDate:
+          pattern: '^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$'
+          type: string
+          format: date
+          nullable: true
+        orderDate:
+          pattern: '^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$'
+          type: string
+          format: date
+          nullable: true
+        requestedDeliveryDate:
+          pattern: '^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$'
+          type: string
+          format: date
+          nullable: true
+        documentDate:
+          pattern: '^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$'
+          type: string
+          format: date
+          nullable: true
+        externalDocumentNo:
+          maxLength: 35
+          type: string
+          nullable: true
+        yourReference:
+          maxLength: 35
+          type: string
+          nullable: true
+        priceIncludesTax:
+          type: boolean
+          nullable: true
+        allowanceAmount:
+          type: number
+          format: decimal
+          nullable: true
+        voucherReference:
+          maxLength: 50
+          type: string
+          nullable: true
+        voucherDescription:
+          maxLength: 100
+          type: string
+          nullable: true
+        voucherAmount:
+          type: number
+          format: decimal
+          nullable: true
+        paymentMethod:
+          maxLength: 10
+          type: string
+          nullable: true
+        paymentReference:
+          maxLength: 100
+          type: string
+          nullable: true
+        paymentAmount:
+          type: number
+          format: decimal
+          nullable: true
+        amountInclTax:
+          type: number
+          format: decimal
+          nullable: true
+        amountExclTax:
+          type: number
+          format: decimal
+          nullable: true
+        dimension1Code:
+          maxLength: 20
+          type: string
+          nullable: true
+        dimension2Code:
+          maxLength: 20
+          type: string
+          nullable: true
+        importCode:
+          maxLength: 20
+          type: string
+          nullable: true
+        salesImportLines:
+          type: array
+          items:
+            $ref: '#/components/schemas/Microsoft.NAV.salesImportLine'
+        salesImportPayments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Microsoft.NAV.salesImportPayment'
+      example:
+        id: string (identifier)
+        eventType:
+          '@odata.type': Microsoft.NAV.odgifSalesDocumentEventType
+        documentType:
+          '@odata.type': Microsoft.NAV.salesDocumentType
+        documentNumber: string
+        customerNumber: string
+        customerID: string
+        billingName: string
+        billingAddressLine1: string
+        billingAddressLine2: string
+        billingCity: string
+        billingState: string
+        billingCountry: string
+        billingPostalCode: string
+        shippingName: string
+        shippingAddressLine1: string
+        shippingAddressLine2: string
+        shippingCity: string
+        shippingState: string
+        shippingCountry: string
+        shippingPostalCode: string
+        currencyCode: string
+        transactionDate: string (timestamp)
+        orderDate: string (timestamp)
+        requestedDeliveryDate: string (timestamp)
+        documentDate: string (timestamp)
+        externalDocumentNo: string
+        yourReference: string
+        priceIncludesTax: true
+        allowanceAmount: number
+        voucherReference: string
+        voucherDescription: string
+        voucherAmount: number
+        paymentMethod: string
+        paymentReference: string
+        paymentAmount: number
+        amountInclTax: number
+        amountExclTax: number
+        dimension1Code: string
+        dimension2Code: string
+        importCode: string
+        salesImportLines:
+          - '@odata.type': Microsoft.NAV.salesImportLine
+        salesImportPayments:
+          - '@odata.type': Microsoft.NAV.salesImportPayment
+    Microsoft.NAV.salesImportLine:
+      title: salesImportLine
+      type: object
+      properties:
+        entryNo:
+          maximum: 2147483647
+          minimum: -2147483648
+          type: integer
+          format: int32
+        sequence:
+          maximum: 2147483647
+          minimum: -2147483648
+          type: integer
+          format: int32
+        id:
+          type: string
+          nullable: true
+        externalId:
+          maxLength: 50
+          type: string
+          nullable: true
+        lineType:
+          anyOf:
+            - $ref: '#/components/schemas/Microsoft.NAV.salesLineType'
+          nullable: true
+        cancel:
+          type: boolean
+          nullable: true
+        barcode:
+          maxLength: 30
+          type: string
+          nullable: true
+        itemNumber:
+          maxLength: 20
+          type: string
+          nullable: true
+        quantity:
+          type: number
+          format: decimal
+          nullable: true
+        quantityShippedReturned:
+          type: number
+          format: decimal
+          nullable: true
+        quantityInvoicedCredited:
+          type: number
+          format: decimal
+          nullable: true
+        unitPrice:
+          type: number
+          format: decimal
+          nullable: true
+        discountAmount:
+          type: number
+          format: decimal
+          nullable: true
+        voucherReference:
+          maxLength: 50
+          type: string
+          nullable: true
+        voucherDescription:
+          maxLength: 100
+          type: string
+          nullable: true
+        voucherAmount:
+          type: number
+          format: decimal
+          nullable: true
+        taxAmount:
+          type: number
+          format: decimal
+          nullable: true
+        amountIncludingTax:
+          type: number
+          format: decimal
+          nullable: true
+      example:
+        entryNo: integer (identifier)
+        sequence: integer (identifier)
+        id: string
+        externalId: string
+        lineType:
+          '@odata.type': Microsoft.NAV.salesLineType
+        cancel: true
+        barcode: string
+        itemNumber: string
+        quantity: number
+        quantityShippedReturned: number
+        quantityInvoicedCredited: number
+        unitPrice: number
+        discountAmount: number
+        voucherReference: string
+        voucherDescription: string
+        voucherAmount: number
+        taxAmount: number
+        amountIncludingTax: number
+    Microsoft.NAV.salesImportPayment:
+      title: salesImportPayment
+      type: object
+      properties:
+        entryNo:
+          maximum: 2147483647
+          minimum: -2147483648
+          type: integer
+          format: int32
+        sequence:
+          maximum: 2147483647
+          minimum: -2147483648
+          type: integer
+          format: int32
+        id:
+          type: string
+          nullable: true
+        service:
+          maxLength: 20
+          type: string
+          nullable: true
+        reference:
+          maxLength: 35
+          type: string
+          nullable: true
+        paymentAmount:
+          type: number
+          format: decimal
+          nullable: true
+        refundAmount:
+          type: number
+          format: decimal
+          nullable: true
+        description:
+          maxLength: 50
+          type: string
+          nullable: true
+      example:
+        entryNo: integer (identifier)
+        sequence: integer (identifier)
+        id: string
+        service: string
+        reference: string
+        paymentAmount: number
+        refundAmount: number
+        description: string
+    Microsoft.NAV.odgifSalesDocumentEventType:
+      title: odgifSalesDocumentEventType
+      enum:
+        - Create
+        - Update
+        - Ship
+        - Invoice
+        - Cancel
+        - Cancel_x0020_Lines
+      type: string
+    Microsoft.NAV.salesDocumentType:
+      title: salesDocumentType
+      enum:
+        - Quote
+        - Order
+        - Invoice
+        - Credit_x0020_Memo
+        - Blanket_x0020_Order
+        - Return_x0020_Order
+      type: string
+    Microsoft.NAV.salesLineType:
+      title: salesLineType
+      enum:
+        - _x0020_
+        - G_x002F_L_x0020_Account
+        - Item
+        - Resource
+        - Fixed_x0020_Asset
+        - Charge_x0020__x0028_Item_x0029_
+        - Allocation_x0020_Account
+      type: string
     odata.error:
       required:
         - error
@@ -8739,6 +11734,12 @@ components:
           - '@odata.type': Microsoft.NAV.product
         productSalesPrices:
           - '@odata.type': Microsoft.NAV.productSalesPrice
+        salesImportDocuments:
+          - '@odata.type': Microsoft.NAV.salesImportDocument
+        salesImportLines:
+          - '@odata.type': Microsoft.NAV.salesImportLine
+        salesImportPayments:
+          - '@odata.type': Microsoft.NAV.salesImportPayment
         systemCreatedAt: '0001-01-01T00:00:00.0000000+00:00'
         systemCreatedBy: 00000000-0000-0000-0000-000000000000
         systemModifiedAt: '0001-01-01T00:00:00.0000000+00:00'
@@ -8896,6 +11897,85 @@ components:
         startingDate: '0001-01-01T00:00:00.0000000'
         unitOfMeasureCode: String
         unitPrice: 0
+    Microsoft.NAV.salesImportDocument:
+      value:
+        allowanceAmount: 0
+        amountExclTax: 0
+        amountInclTax: 0
+        billingAddressLine1: String
+        billingAddressLine2: String
+        billingCity: String
+        billingCountry: String
+        billingName: String
+        billingPostalCode: String
+        billingState: String
+        currencyCode: String
+        customerID: 00000000-0000-0000-0000-000000000000
+        customerNumber: String
+        dimension1Code: String
+        dimension2Code: String
+        documentDate: '0001-01-01T00:00:00.0000000'
+        documentNumber: String
+        documentType:
+          '@odata.type': Microsoft.NAV.salesDocumentType
+        eventType:
+          '@odata.type': Microsoft.NAV.odgifSalesDocumentEventType
+        externalDocumentNo: String
+        id: 00000000-0000-0000-0000-000000000000 (identifier)
+        importCode: String
+        orderDate: '0001-01-01T00:00:00.0000000'
+        paymentAmount: 0
+        paymentMethod: String
+        paymentReference: String
+        priceIncludesTax: true
+        requestedDeliveryDate: '0001-01-01T00:00:00.0000000'
+        salesImportLines:
+          - '@odata.type': Microsoft.NAV.salesImportLine
+        salesImportPayments:
+          - '@odata.type': Microsoft.NAV.salesImportPayment
+        shippingAddressLine1: String
+        shippingAddressLine2: String
+        shippingCity: String
+        shippingCountry: String
+        shippingName: String
+        shippingPostalCode: String
+        shippingState: String
+        transactionDate: '0001-01-01T00:00:00.0000000'
+        voucherAmount: 0
+        voucherDescription: String
+        voucherReference: String
+        yourReference: String
+    Microsoft.NAV.salesImportLine:
+      value:
+        amountIncludingTax: 0
+        barcode: String
+        cancel: true
+        discountAmount: 0
+        entryNo: 0
+        externalId: String
+        id: String
+        itemNumber: String
+        lineType:
+          '@odata.type': Microsoft.NAV.salesLineType
+        quantity: 0
+        quantityInvoicedCredited: 0
+        quantityShippedReturned: 0
+        sequence: 0
+        taxAmount: 0
+        unitPrice: 0
+        voucherAmount: 0
+        voucherDescription: String
+        voucherReference: String
+    Microsoft.NAV.salesImportPayment:
+      value:
+        description: String
+        entryNo: 0
+        id: String
+        paymentAmount: 0
+        reference: String
+        refundAmount: 0
+        sequence: 0
+        service: String
 tags:
   - name: additionalInformation.additionalInfo
     x-ms-docs-toc-type: page
@@ -8920,6 +12000,12 @@ tags:
   - name: companies.product
     x-ms-docs-toc-type: page
   - name: companies.productSalesPrice
+    x-ms-docs-toc-type: page
+  - name: companies.salesImportDocument
+    x-ms-docs-toc-type: page
+  - name: companies.salesImportLine
+    x-ms-docs-toc-type: page
+  - name: companies.salesImportPayment
     x-ms-docs-toc-type: page
   - name: companies.variantAttribute
     x-ms-docs-toc-type: page
@@ -8956,6 +12042,16 @@ tags:
   - name: products.variant
     x-ms-docs-toc-type: page
   - name: productSalesPrices.productSalesPrice
+    x-ms-docs-toc-type: page
+  - name: salesImportDocuments.salesImportDocument
+    x-ms-docs-toc-type: page
+  - name: salesImportDocuments.salesImportLine
+    x-ms-docs-toc-type: page
+  - name: salesImportDocuments.salesImportPayment
+    x-ms-docs-toc-type: page
+  - name: salesImportLines.salesImportLine
+    x-ms-docs-toc-type: page
+  - name: salesImportPayments.salesImportPayment
     x-ms-docs-toc-type: page
   - name: subscriptions.subscriptions
     x-ms-docs-toc-type: page
